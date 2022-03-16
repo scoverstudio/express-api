@@ -15,6 +15,13 @@ router.route("/seats/:id").get((req, res) => {
 
 router.route("/seats").post((req, res) => {
   const { day, seat, client, email } = req.body;
+  if (
+    db.seats.some(
+      (el) => el.seat.toString() === seat && el.day.toString() === day
+    )
+  ) {
+    res.json({ message: "The slot is already taken..." });
+  }
 
   if (day && seat && client && email) {
     db.seats.push({ day, seat, client, email, id: uuidv4() });
