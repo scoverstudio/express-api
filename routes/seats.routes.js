@@ -10,16 +10,12 @@ router.route("/seats").get((req, res) => {
 });
 
 router.route("/seats/:id").get((req, res) => {
-  res.json(db.seats.find((el) => el.id.toString() === req.params.id));
+  res.json(db.seats.find((el) => el.id === req.params.id));
 });
 
 router.route("/seats").post((req, res) => {
   const { day, seat, client, email } = req.body;
-  if (
-    db.seats.some(
-      (el) => el.seat.toString() === seat && el.day.toString() === day
-    )
-  ) {
+  if (db.seats.some((el) => el.seat === seat && el.day === day)) {
     res.json({ message: "The slot is already taken..." });
   }
 
@@ -31,24 +27,21 @@ router.route("/seats").post((req, res) => {
 
 router.route("/seats/:id").put((req, res) => {
   const { day, seat, client, email } = req.body;
-  db.seats.find((el) =>
-    el.id.toString() === req.params.id
-      ? ((el.day = day),
-        (el.seat = seat),
-        (el.client = client),
-        (el.email = email))
-      : ""
-  );
-  if (day && seat && client && email) {
+  const element = db.seats.find((el) => el.id === req.params.id);
+
+  if (element && day && seat && client && email) {
+    element.day = day;
+    element.seat = seat;
+    element.client = client;
+    element.email = email;
     res.json({ message: "OK" });
   }
 });
 
 router.route("/seats/:id").delete((req, res) => {
-  const index = db.seats
-    .map((el) => el.id === req.params.id)
-    .indexOf(req.params.id);
+  const index = db.seats.findIndex((el) => el.id === req.params.id);
   db.seats.splice(index, 1);
+
   res.json({ message: "OK" });
 });
 

@@ -10,7 +10,7 @@ router.route("/concerts").get((req, res) => {
 });
 
 router.route("/concerts/:id").get((req, res) => {
-  res.json(db.concerts.find((el) => el.id.toString() === req.params.id));
+  res.json(db.concerts.find((el) => el.id === req.params.id));
 });
 
 router.route("/concerts").post((req, res) => {
@@ -24,25 +24,22 @@ router.route("/concerts").post((req, res) => {
 
 router.route("/concerts/:id").put((req, res) => {
   const { performer, genre, price, day, image } = req.body;
-  db.concerts.find((el) =>
-    el.id.toString() === req.params.id
-      ? ((el.performer = performer),
-        (el.genre = genre),
-        (el.pirce = price),
-        (el.day = day),
-        (el.image = image))
-      : ""
-  );
-  if (performer && genre && price && day && image) {
+  const element = db.concerts.find((el) => el.id === req.params.id);
+
+  if (element && performer && genre && price && day && image) {
+    element.performer = performer;
+    element.genre = genre;
+    element.price = price;
+    element.day = day;
+    element.image = image;
     res.json({ message: "OK" });
   }
 });
 
 router.route("/concerts/:id").delete((req, res) => {
-  const index = db.concerts
-    .map((el) => el.id === req.params.id)
-    .indexOf(req.params.id);
+  const index = db.concerts.findIndex((el) => el.id === req.params.id);
   db.concerts.splice(index, 1);
+
   res.json({ message: "OK" });
 });
 
