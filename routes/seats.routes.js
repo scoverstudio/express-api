@@ -21,6 +21,7 @@ router.route("/seats").post((req, res) => {
 
   if (day && seat && client && email) {
     db.seats.push({ day, seat, client, email, id: uuidv4() });
+    req.io.emit("seatsUpdated", db.seats);
     res.json({ message: "OK" });
   }
 });
