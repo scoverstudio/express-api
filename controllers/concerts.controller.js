@@ -36,10 +36,8 @@ exports.modifyConcertByID = async (req, res) => {
   try {
     const { performer, genre, price, day, image } = req.body;
     const con = await Concert.findById(req.params.id);
-    console.log(con);
 
     if (con && performer && genre && price && day && image) {
-      console.log(performer);
       con.performer = performer;
       con.genre = genre;
       con.price = price;
