@@ -62,10 +62,7 @@ const server = app.listen(process.env.PORT || 8000, () => {
 
 const io = socket(server, {
   cors: {
-    origin: [
-      "http://localhost:3000",
-      "https://order-tickets-express-scv.herokuapp.com/order-a-ticket",
-    ],
+    origin: "*",
   },
 });
 
