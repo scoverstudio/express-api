@@ -12,11 +12,6 @@ class SeatChooser extends React.Component {
       ? "order-tickets-express-scv.herokuapp.com/order-a-ticket"
       : "http://localhost:8000";
     this.socket = io(URL);
-    // this.socket = io(
-    //   process.env.NODE_ENV === "development"
-    //     ? "http://localhost:8000/"
-    //     : "https://order-tickets-express-scv.herokuapp.com/order-a-ticket/"
-    // );
     this.socket.on("seatsUpdated", (seats) => loadSeatsData(seats));
 
     loadSeats();
