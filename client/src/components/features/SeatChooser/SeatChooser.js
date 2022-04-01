@@ -7,9 +7,11 @@ import "./SeatChooser.scss";
 class SeatChooser extends React.Component {
   componentDidMount() {
     const { loadSeats, loadSeatsData } = this.props;
-
+    console.log(process.env.NODE_ENV);
     this.socket = io(
-      "https://order-tickets-express-scv.herokuapp.com/order-a-ticket"
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:8000/"
+        : "https://order-tickets-express-scv.herokuapp.com/order-a-ticket/"
     );
     this.socket.on("seatsUpdated", (seats) => loadSeatsData(seats));
 
