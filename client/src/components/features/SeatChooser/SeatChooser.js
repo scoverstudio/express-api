@@ -9,9 +9,7 @@ class SeatChooser extends React.Component {
     const { loadSeats, loadSeatsData } = this.props;
 
     this.socket = io(
-      process.env.NODE_ENV === "production"
-        ? "http://localhost:8000/"
-        : "https://order-tickets-express-scv.herokuapp.com/order-a-ticket"
+      "https://order-tickets-express-scv.herokuapp.com/order-a-ticket"
     );
     this.socket.on("seatsUpdated", (seats) => loadSeatsData(seats));
 
