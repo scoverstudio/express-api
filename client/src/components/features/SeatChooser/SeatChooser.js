@@ -9,8 +9,8 @@ class SeatChooser extends React.Component {
     const { loadSeats, loadSeatsData } = this.props;
     const IS_PROD = process.env.NODE_ENV === "production";
     const URL = IS_PROD
-      ? "http://order-tickets-express-scv.herokuapp.com"
-      : "http://localhost:8000";
+      ? "https://order-tickets-express-scv.herokuapp.com"
+      : "https://localhost:8000";
     this.socket = io(URL)
     this.socket.on("seatsUpdated", (seats) => loadSeatsData(seats));
 
