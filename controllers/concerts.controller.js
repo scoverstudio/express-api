@@ -1,8 +1,21 @@
 const Concert = require("../models/concert.model");
+const Seat = require("../models/seat.model");
+
+const maxSeats = 50;
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Concert.find());
+    const allSeats = await Seat.find();
+    const concerts = (await Concert.find().lean()).map((concert) => {
+      const bookedSeatsForDay = allSeats.filter(
+        (seat) => seat.day === concert.day
+      );
+      return {
+        ...concert,
+        tickets: maxSeats - bookedSeatsForDay.length,
+      };
+    });
+    res.json(await concerts);
   } catch (err) {
     res.status(500).json({ message: err });
   }

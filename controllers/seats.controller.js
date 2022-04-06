@@ -22,6 +22,7 @@ exports.getById = async (req, res) => {
 exports.addSeat = async (req, res) => {
   try {
     const { day, seat, client, email } = req.body;
+    const maxSeats = 50;
     const allSeats = await Seat.find();
     if (allSeats.some((el) => el.seat === seat && el.day === day)) {
       res.json({ message: "The slot is already taken..." });
@@ -29,7 +30,9 @@ exports.addSeat = async (req, res) => {
       const newSeat = new Seat({ day, seat, client, email });
       await newSeat.save();
       const allSeatsUpdated = await Seat.find();
+      const ticketsLeft = maxSeats - allSeatsUpdated.length;
       req.io.emit("seatsUpdated", allSeatsUpdated);
+      req.io.emit("ticketsUpdated", ticketsLeft);
       res.json({ message: "OK" });
     } else res.status(404).json({ message: "Not found..." });
   } catch (err) {
