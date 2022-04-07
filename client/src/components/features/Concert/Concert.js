@@ -18,7 +18,6 @@ const Concert = ({ performer, price, genre, day, image, tickets }) => {
     });
     newSocket.on("ticketsUpdated", (ticketsUpdated, bookDay) => {
       if (bookDay === day) {
-        console.log(ticketsUpdated);
         setTicketsLeft(ticketsUpdated);
       }
     });
