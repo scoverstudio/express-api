@@ -10,7 +10,7 @@ const Concert = ({ performer, price, genre, day, image, tickets }) => {
   useEffect(() => {
     const IS_PROD = process.env.NODE_ENV === "production";
     const URL = IS_PROD
-      ? "wss://order-tickets-express-scv.herokuapp.com/order-a-ticket"
+      ? "https://order-tickets-express-scv.herokuapp.com"
       : "http://localhost:8000";
     const newSocket = io(URL, {
       withCredentials: true,
