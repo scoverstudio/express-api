@@ -16,11 +16,13 @@ const Concert = ({ performer, price, genre, day, image, tickets }) => {
       withCredentials: true,
       transports: ["websocket"],
     });
-    newSocket.on("ticketsUpdated", (ticketsUpdated) => {
-      console.log(ticketsUpdated);
-      setTicketsLeft(ticketsUpdated);
+    newSocket.on("ticketsUpdated", (ticketsUpdated, bookDay) => {
+      if (bookDay === day) {
+        console.log(ticketsUpdated);
+        setTicketsLeft(ticketsUpdated);
+      }
     });
-  }, []);
+  }, [day]);
   return (
     <article className="concert">
       <Row noGutters>
