@@ -12,10 +12,7 @@ const Concert = ({ performer, price, genre, day, image, tickets }) => {
     const URL = IS_PROD
       ? "https://order-tickets-express-scv.herokuapp.com"
       : "http://localhost:8000";
-    const newSocket = io(URL, {
-      withCredentials: true,
-      transports: ["websocket"],
-    });
+    const newSocket = io(URL);
     newSocket.on("ticketsUpdated", (ticketsUpdated, bookDay) => {
       if (bookDay === day) {
         setTicketsLeft(ticketsUpdated);
