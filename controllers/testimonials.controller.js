@@ -1,4 +1,5 @@
 const Testimonial = require("../models/testimonial.model");
+const sanitize = require("mongo-sanitize");
 
 // get all testimonials
 exports.getAll = async (req, res) => {
@@ -34,9 +35,20 @@ exports.getByID = async (req, res) => {
 exports.addTestimonial = async (req, res) => {
   try {
     const { author, text } = req.body;
-    const newTestimonial = new Testimonial({ author, text });
-    await newTestimonial.save();
-    res.json({ message: "OK", newTestimonial });
+    const clearTestimonialAuthor = sanitize(author);
+    const alreadyExists = await Testimonial.findOne({
+      author: { $eq: clearTestimonialAuthor },
+    });
+    if (alreadyExists) {
+      res.status(404).json({ message: "already exists" });
+    } else {
+      const newTestimonial = new Testimonial({
+        author: clearTestimonialAuthor,
+        text,
+      });
+      await newTestimonial.save();
+      res.json({ message: "OK", newTestimonial });
+    }
   } catch (err) {
     res.status(500).json({ message: err });
   }
