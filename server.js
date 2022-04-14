@@ -41,14 +41,13 @@ app.use((req, res) => {
     res.json({ message: "Not found..." });
   }
 });
-
-mongoose.connect(
-  `mongodb+srv://SCOVER:${process.env.DB_PASS}@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+  mongoose.connect(
+    `mongodb+srv://SCOVER:${process.env.DB_PASS}@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
 
 const db = mongoose.connection;
 
