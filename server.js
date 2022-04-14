@@ -3,7 +3,7 @@ const cors = require("cors");
 const path = require("path");
 const socket = require("socket.io");
 const mongoose = require("mongoose");
-const helmet = require('helmet');
+const helmet = require("helmet");
 
 const app = express();
 
@@ -41,10 +41,9 @@ app.use((req, res) => {
     res.json({ message: "Not found..." });
   }
 });
-`mongodb+srv://SCOVER:${process.env.DB_PASS}@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
 
 mongoose.connect(
-  "mongodb+srv://SCOVER:studenttest123@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  `mongodb+srv://SCOVER:${process.env.DB_PASS}@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
