@@ -41,7 +41,7 @@ app.use((req, res) => {
     res.json({ message: "Not found..." });
   }
 });
-// `mongodb+srv://SCOVER:${process.env.DB_PASS}@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
+`mongodb+srv://SCOVER:${process.env.DB_PASS}@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`,
 
 mongoose.connect(
   "mongodb+srv://SCOVER:studenttest123@cluster0.ypuz9.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",

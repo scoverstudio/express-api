@@ -33,18 +33,18 @@ exports.getByID = async (req, res) => {
 };
 
 exports.addTestimonial = async (req, res) => {
+  sanitize(req.body);
+
   try {
-    const { author, text } = req.body;
-    const clearTestimonialAuthor = sanitize(author);
     const alreadyExists = await Testimonial.findOne({
-      author: { $eq: clearTestimonialAuthor },
+      author: { $eq: req.body.author },
     });
     if (alreadyExists) {
       res.status(404).json({ message: "already exists" });
     } else {
       const newTestimonial = new Testimonial({
-        author: clearTestimonialAuthor,
-        text,
+        author: req.body.author,
+        text: req.body.text,
       });
       await newTestimonial.save();
       res.json({ message: "OK", newTestimonial });
